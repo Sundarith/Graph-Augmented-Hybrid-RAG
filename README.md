@@ -48,7 +48,7 @@ competitive once paired with the pipeline:
 | Phi-4-mini-reasoning (3.8B, shipped) | 17.9% | **90.9%** | +73.0 pp |
 | Gemma 4 E4B (thinking on) | 69.6% | 90.3% | +20.7 pp |
 | IBM Granite 4.1-8B (RAG-tuned instruct) | 63.6% | 85.6% | +22.0 pp |
-| DeepSeek-R1-Distill-Llama-8B | 25.7% | 82.1% | +56.4 pp |
+| DeepSeek-R1-Distill-Llama-8B | 25.7% | 82.0% | +56.3 pp |
 
 Every with-RAG row beats GPT-4 (72.0%) and the strongest fine-tuned open-source
 specialist (75.6%). The choice of retrieval pipeline shifts the result by tens to
@@ -71,6 +71,8 @@ inference time, with no domain or task post-training of the generator?
 
 ## Architecture
 
+![CTI-RAG pipeline](assets/pipeline_diagram.png)
+
 ```text
 CTI-Bench prompt (CVE description)
   |
@@ -81,9 +83,8 @@ Hybrid retrieval
   |
   v
 1-hop knowledge-graph expansion
-  - NVD bridge edges:   CVE -> NVD-assigned CWE(s)
-  - CWE hierarchy edges: child <-> parent (MITRE CWE taxonomy)
-  - top 5 neighbours re-scored and added to context
+  - NVD bridge edges: CVE -> NVD-assigned CWE(s)
+  - top graph neighbours are re-scored and added to context
   |
   +-- NVD-mapped CVE --> Bridge injection (fast path)
   |     - inject the structured NVD-assigned CWE chunk(s)
@@ -99,10 +100,12 @@ Hybrid retrieval
 Single final-answer LLM call (Phi-4-mini-reasoning via vLLM)
 ```
 
-Graph edges come only from structured NVD `cwe_ids` and the MITRE CWE hierarchy; CWE
-identifiers mentioned in CVE prose are deliberately not treated as edges. The two
-execution paths converge on exactly one final-answer call — no second model, no
-ensembling.
+For the shipped CVE-to-CWE result, CVE graph edges come only from structured NVD
+`cwe_ids`; CWE identifiers mentioned in CVE prose are deliberately not treated as edges.
+The two execution paths converge on exactly one final-answer call -- no second model, no
+ensembling. CWE hierarchy expansion, HyDE, phrase selection, mapped fast-context
+truncation, and picker/routed variants are implemented as experiments but are not part of
+the 90.9% shipped recipe.
 
 The repository also implements broader CTI multi-hop traversal (ATT&CK / CAPEC / CWE /
 mitigation) used by the interactive chatbot; the paper and the numbers above are scoped
@@ -188,6 +191,12 @@ CTI-Bench prompt field, scored by strict CWE-ID match:
 ```bash
 CTI_RAG_RCM_ONLY=1 \
 CTI_RAG_PROMPT_CONTEXT_ONLY=1 \
+CTI_RAG_CWE_HYDE=0 \
+CTI_RAG_CWE_PHRASE_SELECTOR=0 \
+CTI_RAG_CWE_MAPPED_FAST_CONTEXT=0 \
+CTI_RAG_CWE_HIERARCHY_EXPANSION=0 \
+CTI_RAG_MAPPED_BRIDGE_PREFER_LAST_NVD=0 \
+CTI_RAG_CWE_CROSSENCODER=1 \
 CTI_RAG_LLM_RESPONSE_BUDGET=2048 \
 CTI_RAG_LLM_MAX_MODEL_LEN=24576 \
 CTI_RAG_EMBEDDER_DEVICE=cpu \
