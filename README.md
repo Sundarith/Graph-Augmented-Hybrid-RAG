@@ -167,9 +167,10 @@ cross-encoder run on CPU so the GPU is dedicated to the vLLM LLM endpoint.
 
 ## Quick Start
 
-Start the vLLM endpoint in a separate terminal. The eval harness addresses the model
-under the fixed alias `Qwen/Qwen2.5-7B-Instruct`, so the served model name is set
-accordingly regardless of which checkpoint is loaded:
+Start the vLLM endpoint in a separate terminal. The checkpoint being loaded is
+`microsoft/Phi-4-mini-reasoning`; the `--served-model-name` value below is only a
+backward-compatible OpenAI API alias used by the eval harness. It does not load or use
+Qwen weights.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 vllm serve microsoft/Phi-4-mini-reasoning \
