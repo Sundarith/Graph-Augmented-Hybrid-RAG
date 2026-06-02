@@ -71,7 +71,9 @@ inference time, with no domain or task post-training of the generator?
 
 ## Architecture
 
-![CTI-RAG pipeline](assets/pipeline_diagram.png)
+<p align="center">
+  <img src="assets/pipeline_diagram.png" alt="CTI-RAG pipeline" width="720">
+</p>
 
 ```text
 CTI-Bench prompt (CVE description)
