@@ -72,7 +72,7 @@ inference time, with no domain or task post-training of the generator?
 ## Architecture
 
 <p align="center">
-  <img src="assets/pipeline_diagram.png" alt="CTI-RAG pipeline" width="720">
+  <img src="assets/pipeline_diagram.png" alt="CTI-RAG pipeline" width="520">
 </p>
 
 ```text
