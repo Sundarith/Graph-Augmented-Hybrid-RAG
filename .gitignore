@@ -24,6 +24,12 @@ HANDOFF.md
 PLAN.md
 RESEARCH.md
 docs/
+RESUME.md
+
+# One-off local paper/report patch helpers
+patch_tables*.py
+remove_ablation_chart.py
+update_report.py
 
 # Paper/presentation deliverables — research artifacts, not project code
 presentation/
@@ -33,6 +39,11 @@ eval_*.log
 eval_*_debug.jsonl
 analysis/*_eval_failures_debug.jsonl
 analysis/*_context_failures_*.jsonl
+analysis/*_2026-05-*.md
+analysis/*_2026-05-*.txt
+analysis/*_2026-05-*.tsv
+analysis/*_2026-05-*.jsonl
+analysis/*_202605*.tsv
 
 # Long-running training artifacts and caches
 data/processed/chunk_embs_*.npy
@@ -47,6 +58,26 @@ checkpoints/
 
 # Third-party local checkouts
 tools/
+
+# Local exploratory scripts not part of the shipped recipe
+scripts/STATUS.md
+scripts/compute_mcnemar.py
+scripts/diff_eval_logs.py
+scripts/generate_latency_chart.py
+scripts/launch_baseline_eval.sh
+scripts/launch_ce_v1.sh
+scripts/launch_t_raft_v2.sh
+scripts/prep_ce_triplets.py
+scripts/qwen3_5_nothink_chat_template.jinja
+scripts/retrieval_only_baseline.py
+scripts/run_hierarchy_ablation.sh
+scripts/run_lean_recipe.sh
+scripts/run_loo_ablations.sh
+scripts/run_routed_variance.sh
+scripts/run_v2_eval.sh
+scripts/smoke_overflow_fix.py
+train_cwe_reranker.py
+triage_baseline_failures.py
 
 # OS
 .DS_Store

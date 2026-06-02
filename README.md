@@ -125,6 +125,21 @@ to the CVE-to-CWE (CTI-RCM) task.
   confusion) and NVD-vs-CTI-Bench annotation disagreements.
 - Built for local research and reproducibility, not as a hardened production service.
 
+## Repository Layout
+
+| Path | Purpose |
+| --- | --- |
+| `better_rag.py` | Graph-augmented hybrid RAG pipeline |
+| `eval_rcm.py` | CTI-Bench RCM evaluation harness |
+| `scripts/run_shipped_phi_eval.sh` | Shipped 90.9% reproduction launcher |
+| `scripts/zero_shot_eval.py` | No-RAG model baseline evaluator |
+| `data/processed/` | Compact MITRE/NVD metadata and generated indexes |
+| `assets/` | README-facing figures |
+| `analysis/` | Historical diagnostics and ablation notes |
+
+The shipped recipe is intentionally separated from historical experiment launchers. See
+`scripts/README.md` and `analysis/README.md` before interpreting older files.
+
 ## Data
 
 The system expects public MITRE/NVD data and a local CTI-Bench clone:
@@ -165,6 +180,10 @@ Tested environment:
 All experiments run on a single NVIDIA RTX 4090 (24 GB VRAM). The bi-encoder and
 cross-encoder run on CPU so the GPU is dedicated to the vLLM LLM endpoint.
 
+Core Python dependencies are listed in `requirements.txt`. CUDA/PyTorch/vLLM installs are
+hardware-specific; the versions above are the tested environment, not a portability
+guarantee.
+
 ## Quick Start
 
 Start the Phi vLLM endpoint in a separate terminal:
@@ -191,21 +210,8 @@ The shipped 90.9% configuration uses the context-only clean prompt with the unch
 CTI-Bench prompt field, scored by strict CWE-ID match:
 
 ```bash
-CTI_RAG_RCM_ONLY=1 \
-CTI_RAG_PROMPT_CONTEXT_ONLY=1 \
-CTI_RAG_LLM_MODEL=microsoft/Phi-4-mini-reasoning \
-CTI_RAG_CWE_HYDE=0 \
-CTI_RAG_CWE_PHRASE_SELECTOR=0 \
-CTI_RAG_CWE_MAPPED_FAST_CONTEXT=0 \
-CTI_RAG_CWE_HIERARCHY_EXPANSION=0 \
-CTI_RAG_MAPPED_BRIDGE_PREFER_LAST_NVD=0 \
-CTI_RAG_CWE_CROSSENCODER=1 \
-CTI_RAG_LLM_RESPONSE_BUDGET=2048 \
-CTI_RAG_LLM_MAX_MODEL_LEN=24576 \
-CTI_RAG_EMBEDDER_DEVICE=cpu \
-CTI_RAG_CWE_CROSSENCODER_DEVICE=cpu \
-CTI_RAG_EVAL_WORKERS=16 \
-conda run -n cyber-ft python3 -u eval_rcm.py 1000
+conda activate cyber-ft
+scripts/run_shipped_phi_eval.sh 1000
 ```
 
 - The final classification call uses the unchanged CTI-Bench `row["Prompt"]` at default
@@ -218,6 +224,7 @@ conda run -n cyber-ft python3 -u eval_rcm.py 1000
   `CTI_RAG_KNN_CONFIDENCE_MARGIN=1.50`) are the reported values and need not be set.
 - A larger response budget is used because the reasoning-distilled primary emits a
   reasoning preamble before the final CWE-ID.
+- Full environment flags and expected outputs are documented in `REPRODUCIBILITY.md`.
 
 The four-model comparison (Table in the paper) is reproduced by swapping the served
 model — `ibm-granite/granite-4.1-8b`, `deepseek-ai/DeepSeek-R1-Distill-Llama-8B`,

@@ -1,0 +1,6 @@
+numpy==2.4.4
+requests==2.33.1
+matplotlib==3.10.9
+sentence-transformers==5.4.1
+torch==2.10.0
+vllm==0.19.*
