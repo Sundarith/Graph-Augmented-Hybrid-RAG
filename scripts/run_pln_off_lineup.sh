@@ -83,6 +83,9 @@ run_one() {
          CTI_RAG_LLM_RESPONSE_BUDGET=2048 \
          CTI_RAG_MAPPED_BRIDGE_SOFT_CONTEXT=0 \
          CTI_RAG_UNMAPPED_AGGREGATE=0 \
+         CTI_RAG_LLM_MODEL="Qwen/Qwen2.5-7B-Instruct" \
+         CTI_RAG_LLM_MAPPED_MODEL="Qwen/Qwen2.5-7B-Instruct" \
+         CTI_RAG_LLM_UNMAPPED_MODEL="Qwen/Qwen2.5-7B-Instruct" \
          CTI_RAG_LLM_MAPPED_ENDPOINT=http://localhost:8001/v1/chat/completions \
          CTI_RAG_LLM_UNMAPPED_ENDPOINT=http://localhost:8000/v1/chat/completions \
          CTI_RAG_LLM_ENDPOINT=http://localhost:8000/v1/chat/completions \

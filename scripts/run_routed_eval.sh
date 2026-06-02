@@ -5,8 +5,12 @@ set -euo pipefail
 #   - Foundation-Sec-8B-Reasoning on port 8000 for NVD-unmapped CVEs
 #   - Granite 4.1 8B on port 8001 for NVD-mapped CVEs
 #
-# Both servers must expose the fixed alias Qwen/Qwen2.5-7B-Instruct because the
-# evaluation code keeps the model name stable while routing by endpoint.
+# Older routed experiments serve both checkpoints under one stable OpenAI API alias
+# while routing by endpoint. Keep the request-side model names aligned with that alias.
+export CTI_RAG_LLM_MODEL="${CTI_RAG_LLM_MODEL:-Qwen/Qwen2.5-7B-Instruct}"
+export CTI_RAG_LLM_MAPPED_MODEL="${CTI_RAG_LLM_MAPPED_MODEL:-$CTI_RAG_LLM_MODEL}"
+export CTI_RAG_LLM_UNMAPPED_MODEL="${CTI_RAG_LLM_UNMAPPED_MODEL:-$CTI_RAG_LLM_MODEL}"
+export CTI_RAG_LLM_HYDE_MODEL="${CTI_RAG_LLM_HYDE_MODEL:-$CTI_RAG_LLM_MODEL}"
 
 export CTI_RAG_LLM_ROUTER="${CTI_RAG_LLM_ROUTER:-1}"
 export CTI_RAG_LLM_MAPPED_ENDPOINT="${CTI_RAG_LLM_MAPPED_ENDPOINT:-http://localhost:8001/v1/chat/completions}"

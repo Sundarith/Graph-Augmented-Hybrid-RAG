@@ -167,17 +167,16 @@ cross-encoder run on CPU so the GPU is dedicated to the vLLM LLM endpoint.
 
 ## Quick Start
 
-Start the vLLM endpoint in a separate terminal. The checkpoint being loaded is
-`microsoft/Phi-4-mini-reasoning`; the `--served-model-name` value below is only a
-backward-compatible OpenAI API alias used by the eval harness. It does not load or use
-Qwen weights.
+Start the Phi vLLM endpoint in a separate terminal:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 vllm serve microsoft/Phi-4-mini-reasoning \
-  --served-model-name "Qwen/Qwen2.5-7B-Instruct" \
   --enable-prefix-caching --trust-remote-code --port 8000 \
   --max-model-len 24576 --gpu-memory-utilization 0.90
 ```
+
+The eval harness sends `model="microsoft/Phi-4-mini-reasoning"` by default. If you serve
+a checkpoint under a custom vLLM alias, set `CTI_RAG_LLM_MODEL` to that alias.
 
 Run the interactive chatbot:
 
@@ -194,6 +193,7 @@ CTI-Bench prompt field, scored by strict CWE-ID match:
 ```bash
 CTI_RAG_RCM_ONLY=1 \
 CTI_RAG_PROMPT_CONTEXT_ONLY=1 \
+CTI_RAG_LLM_MODEL=microsoft/Phi-4-mini-reasoning \
 CTI_RAG_CWE_HYDE=0 \
 CTI_RAG_CWE_PHRASE_SELECTOR=0 \
 CTI_RAG_CWE_MAPPED_FAST_CONTEXT=0 \
