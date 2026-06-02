@@ -13,6 +13,8 @@ data/raw/cvelistV5/
 data/processed/cve_chunks.jsonl
 data/processed/chunk_embs.npy
 data/processed/chunk_embs_augmented.npy
+data/processed/cwe_chunks_augmented.jsonl
+data/processed/cwe_phrase_index.json
 
 # Third-party/local benchmark checkout
 data/cti-bench/
@@ -44,6 +46,9 @@ analysis/*_2026-05-*.txt
 analysis/*_2026-05-*.tsv
 analysis/*_2026-05-*.jsonl
 analysis/*_202605*.tsv
+analysis/cwe_phrase_index_replay.md
+analysis/rcm_failure_analysis.*
+analysis/rcm_recall_diagnostics.*
 
 # Long-running training artifacts and caches
 data/processed/chunk_embs_*.npy
@@ -61,22 +66,42 @@ tools/
 
 # Local exploratory scripts not part of the shipped recipe
 scripts/STATUS.md
+scripts/classify_failures*.py
 scripts/compute_mcnemar.py
 scripts/diff_eval_logs.py
 scripts/generate_latency_chart.py
+scripts/generate_rag_impact_chart.py
 scripts/launch_baseline_eval.sh
 scripts/launch_ce_v1.sh
 scripts/launch_t_raft_v2.sh
+scripts/patch_*.py
+scripts/per_cwe_breakdown.py
 scripts/prep_ce_triplets.py
 scripts/qwen3_5_nothink_chat_template.jinja
 scripts/retrieval_only_baseline.py
+scripts/run_context_prompt_*.sh
+scripts/run_deepseek_*_pln_off.sh
+scripts/run_gemma4_pln_off.sh
 scripts/run_hierarchy_ablation.sh
 scripts/run_lean_recipe.sh
 scripts/run_loo_ablations.sh
+scripts/run_pln_off*.sh
+scripts/run_routed_eval.sh
 scripts/run_routed_variance.sh
 scripts/run_v2_eval.sh
+scripts/run_zero_shot_lineup.sh
 scripts/smoke_overflow_fix.py
+scripts/update_tables.py
+build_t_raft_dataset.py
+build_cwe_augmented_chunks.py
+decontaminate_t_raft.py
+experiment_cwe_*.py
+measure_latency_sample.py
+measure_retrieval_speed_sample.py
+prep_t_raft_embed.py
+prep_t_raft_qwen.py
 train_cwe_reranker.py
+train_llm_unsloth.py
 triage_baseline_failures.py
 
 # OS

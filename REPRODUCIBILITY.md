@@ -26,6 +26,8 @@ The committed MITRE and processed metadata files provide the compact public-data
 Large generated files such as `data/processed/cve_chunks.jsonl` and
 `data/processed/chunk_embs.npy` are intentionally ignored.
 
+See `DATA.md` for source provenance and rebuild commands.
+
 ## Serve Phi-4-mini-reasoning
 
 ```bash
@@ -69,4 +71,4 @@ python3 -u eval_rcm.py 1000
 - The evaluation uses CTI-Bench `row["Prompt"]` unchanged; it does not add the CVE ID.
 - The final classification path uses one LLM call per query.
 - Historical router, picker, HyDE, phrase-selector, hierarchy-expansion, and T-RAFT
-  scripts are retained as experiment audit trail, not as the shipped recipe.
+  experiments are not part of the shipped recipe.

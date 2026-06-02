@@ -6,6 +6,12 @@ Use `run_shipped_phi_eval.sh` for the reported CTI-Bench RCM result:
 scripts/run_shipped_phi_eval.sh 1000
 ```
 
-The other launchers are historical experiment utilities for model lineups, routed
-ensembles, ablations, and training probes. They are kept for auditability, but they are
-not the shipped paper recipe.
+Use `zero_shot_eval.py` for no-retrieval model baselines:
+
+```bash
+python3 scripts/zero_shot_eval.py 1000 --model microsoft/Phi-4-mini-reasoning
+```
+
+Older launchers for routed ensembles, T-RAFT, paper figure patching, and model-lineup
+orchestration were removed from the public tree because they are not part of the shipped
+artifact recipe.

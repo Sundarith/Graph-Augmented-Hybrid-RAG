@@ -1,5 +1,5 @@
 """
-Hybrid RAG (BM25 + embeddings) over ATT&CK chunks + local LLM via Ollama.
+Graph-augmented hybrid RAG for local CTI retrieval and CVE-to-CWE mapping.
 """
 import json
 import math
@@ -55,8 +55,8 @@ LLM_MAX_MODEL_LEN = int(os.environ.get("CTI_RAG_LLM_MAX_MODEL_LEN", "32768"))
 LLM_RESPONSE_BUDGET = int(os.environ.get("CTI_RAG_LLM_RESPONSE_BUDGET", "256"))   # must match max_tokens passed to vLLM
 LLM_HYDE_RESPONSE_BUDGET = int(os.environ.get("CTI_RAG_LLM_HYDE_RESPONSE_BUDGET", str(LLM_RESPONSE_BUDGET)))
 LLM_SAFETY_MARGIN = 384     # chat template + system tokens + buffer
-# Conservative 3.0 chars-per-token for Qwen on English+code; gives ~27k token
-# headroom under the 32k context window. Truncation fires only on outlier prompts.
+# Conservative 3.0 chars-per-token estimate for English/CVE prose. Truncation
+# fires only on outlier prompts under the configured context window.
 LLM_MAX_PROMPT_CHARS = int(os.environ.get(
     "CTI_RAG_LLM_MAX_PROMPT_CHARS",
     str(int((LLM_MAX_MODEL_LEN - LLM_RESPONSE_BUDGET - LLM_SAFETY_MARGIN) * 3.0)),

@@ -1,8 +1,8 @@
-# Analysis Artifacts
+# Analysis Notes
 
-This directory contains historical diagnostics, ablations, and failure analyses from the
-research process. Some files describe older routed, Foundation-Sec, HyDE, phrase-selector,
-or T-RAFT experiments that were superseded by the shipped result.
+This directory is reserved for analysis notes that are useful to public readers.
+Historical diagnostics, per-run failure logs, paper figure patches, and ablation scratch
+files are intentionally left out of the public tree.
 
 The current headline is documented in the root README:
 
@@ -11,4 +11,4 @@ Phi-4-mini-reasoning + context-only prompt + Graph-Augmented Hybrid RAG
 = 909/1000 (90.9%) on CTI-Bench RCM
 ```
 
-Treat older result notes here as audit trail, not as the final configuration.
+For reproduction, start with `REPRODUCIBILITY.md` and `scripts/run_shipped_phi_eval.sh`.

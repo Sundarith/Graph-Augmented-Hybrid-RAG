@@ -131,14 +131,16 @@ to the CVE-to-CWE (CTI-RCM) task.
 | --- | --- |
 | `better_rag.py` | Graph-augmented hybrid RAG pipeline |
 | `eval_rcm.py` | CTI-Bench RCM evaluation harness |
+| `DATA.md` | Data provenance and rebuild notes |
+| `REPRODUCIBILITY.md` | Exact shipped evaluation recipe |
 | `scripts/run_shipped_phi_eval.sh` | Shipped 90.9% reproduction launcher |
 | `scripts/zero_shot_eval.py` | No-RAG model baseline evaluator |
 | `data/processed/` | Compact MITRE/NVD metadata and generated indexes |
 | `assets/` | README-facing figures |
-| `analysis/` | Historical diagnostics and ablation notes |
+| `analysis/` | Public-facing analysis notes, not per-run logs |
 
-The shipped recipe is intentionally separated from historical experiment launchers. See
-`scripts/README.md` and `analysis/README.md` before interpreting older files.
+The shipped recipe is intentionally separated from historical experiments. See
+`scripts/README.md`, `DATA.md`, and `REPRODUCIBILITY.md` before running an evaluation.
 
 ## Data
 
@@ -163,6 +165,8 @@ data/processed/chunk_embs.npy                # embedding cache, gitignored
 ```
 
 Large generated files are intentionally not committed.
+
+See `DATA.md` for provenance, local-only paths, and rebuild instructions.
 
 ## Requirements
 
@@ -226,12 +230,10 @@ scripts/run_shipped_phi_eval.sh 1000
   reasoning preamble before the final CWE-ID.
 - Full environment flags and expected outputs are documented in `REPRODUCIBILITY.md`.
 
-The four-model comparison (Table in the paper) is reproduced by swapping the served
-model — `ibm-granite/granite-4.1-8b`, `deepseek-ai/DeepSeek-R1-Distill-Llama-8B`,
+The four-model comparison is reproduced by swapping the served model —
+`ibm-granite/granite-4.1-8b`, `deepseek-ai/DeepSeek-R1-Distill-Llama-8B`, or
 `google/gemma-4-E4B-it` (add `CTI_RAG_LLM_ENABLE_THINKING=1` for Gemma) — and re-running
 the same eval. Zero-shot rows (no retrieval) are produced with `scripts/zero_shot_eval.py`.
-The orchestration used for the paper's lineup lives in `scripts/run_*_lineup.sh` and
-`scripts/run_*_pln_off*.sh`.
 
 Useful subset runs:
 
@@ -294,11 +296,11 @@ rm -f data/processed/chunk_embs.npy
 
 ## Sources
 
-- MITRE ATT&CK
-- MITRE CAPEC
-- MITRE CWE
-- NVD CVE data, including CNA and ADP/CISA Vulnrichment mappings
-- CTI-Bench / CTI-RCM
+- MITRE ATT&CK: https://attack.mitre.org/
+- MITRE CAPEC: https://capec.mitre.org/
+- MITRE CWE: https://cwe.mitre.org/
+- NVD CVE data: https://nvd.nist.gov/vuln/data-feeds
+- CTI-Bench / CTI-RCM: https://github.com/xashru/cti-bench
 
 ## License
 

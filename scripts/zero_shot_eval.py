@@ -16,7 +16,7 @@ If --endpoint-b is given, requests are randomly load-balanced across the two end
 Env overrides:
     ZS_ENDPOINT_A   (default http://localhost:8000/v1/chat/completions)
     ZS_ENDPOINT_B   (default unset; single-endpoint mode)
-    ZS_MODEL        (default Qwen/Qwen2.5-7B-Instruct — the served-model-name)
+    ZS_MODEL        (default microsoft/Phi-4-mini-reasoning)
     ZS_MAX_TOKENS   (default 256; bump to 2048 for thinking models)
     ZS_NO_THINK     (1 -> append '/no_think' to user message, for Qwen3 family)
     ZS_WORKERS      (default 16)
@@ -35,7 +35,7 @@ from pathlib import Path
 
 import requests
 
-ROOT = Path("/home/sheng/cyber-ft")
+ROOT = Path(__file__).resolve().parents[1]
 RCM_PATH = ROOT / "data/cti-bench/data/cti-rcm.tsv"
 CVE_CWE_INDEX = ROOT / "data/processed/cve_cwe_index.json"
 
@@ -104,7 +104,7 @@ def main():
     p.add_argument("--nvd-unmapped", action="store_true")
     p.add_argument("--endpoint-a", default=os.environ.get("ZS_ENDPOINT_A", "http://localhost:8000/v1/chat/completions"))
     p.add_argument("--endpoint-b", default=os.environ.get("ZS_ENDPOINT_B", ""))
-    p.add_argument("--model", default=os.environ.get("ZS_MODEL", "Qwen/Qwen2.5-7B-Instruct"))
+    p.add_argument("--model", default=os.environ.get("ZS_MODEL", "microsoft/Phi-4-mini-reasoning"))
     p.add_argument("--workers", type=int, default=int(os.environ.get("ZS_WORKERS", "16")))
     p.add_argument("--max-tokens", type=int, default=int(os.environ.get("ZS_MAX_TOKENS", "256")))
     p.add_argument("--no-think", action="store_true", default=os.environ.get("ZS_NO_THINK", "") == "1",
