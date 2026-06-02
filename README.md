@@ -1,4 +1,4 @@
-# CTI-RAG
+# CTI-RAG: Graph-Augmented Hybrid RAG for CVE-to-CWE Mapping
 
 Local graph-augmented hybrid retrieval-augmented generation (RAG) for cyber threat
 intelligence, evaluated on CVE-to-CWE root-cause mapping.
